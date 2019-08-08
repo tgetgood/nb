@@ -19,6 +19,18 @@
 ;; the browser. In fact, for now it should all be cljs or js. Always focus on at
 ;; least two.
 
+;;;;; Design
+;;
+;; The basic unit of authored code is the block. A block consists of an
+;; interpreter definition and the code to be executed. The definition of an
+;; interpreter is the language plus all dependencies. Basically each block is
+;; sufficiently well defined to be pure. That is given the same inputs it will
+;; produce the same output every time.
+;;
+;; N.B.: blocks have to be pure. They only take information as inputs and return
+;; a value without any side effects. I'm thinking that blocks should be executed
+;; in containers with no disk and no internet access to fascilitate catching
+;; departures from purity. That might be excessive though.
 (defn main-panel []
   (let [name (re-frame/subscribe [::subs/name])]
     [:div
