@@ -1,8 +1,6 @@
 (ns nb.views
-  (:require
-   [re-frame.core :as re-frame]
-   [nb.subs :as subs]
-   ))
+  (:require [re-frame.core :as re-frame]
+            [nb.subs :as subs]))
 
 ;;; TODO: interpreter definition
 ;; So I really have two phases planned. The first is to render static content in
@@ -31,8 +29,32 @@
 ;; a value without any side effects. I'm thinking that blocks should be executed
 ;; in containers with no disk and no internet access to fascilitate catching
 ;; departures from purity. That might be excessive though.
+
+(defn block-metadata []
+  [:p
+   [:span "stuff about the block. expected inputs &c."]
+   [:textarea]])
+
+(defn interpreter-def-window []
+  [:p
+   [:span "language, runtime, libs. Like a container."]
+   [:textarea]])
+
+(defn block-code []
+  [:p
+   [:span "code goes here"]
+   [:textarea]])
+
+(defn block []
+  [:div
+   [block-metadata]
+   [interpreter-def-window]
+   [block-code]])
+
 (defn main-panel []
   (let [name (re-frame/subscribe [::subs/name])]
-    [:div
-     [:h1 "Hello from " @name]
+    [:article
+     [:h1 "Hello from www" @name]
+     [:section
+      [block]]
      ]))
